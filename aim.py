@@ -40,6 +40,10 @@ async def on_message(message):
         await message.channel.send("멍청하게 비치네")
     if message.content.startswith("반짝반짝 희별이"):
         await message.channel.send("멍청하게 비치네")
+    if message.content.startswith("마트롤시카"):
+        await message.channel.send("마트롤시카?!")
+    if message.content.startswith("솔린디가 누구임"):
+        await message.channel.send("나임")
 
     if message.content.startswith("!sb clean"):
         if message.author.guild_permissions.manage_messages:
