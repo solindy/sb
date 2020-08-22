@@ -17,21 +17,18 @@ async def on_message(message):
     if message.author.bot:
         return None
         if message.content.startswith('!sb dm'):
-            if message.author.guild_permissions.manage_messages:
-                for i in message.guild.members:
-                    if i.bot == True:
+            for i in message.guild.members:
+                if i.bot == True:
+                    pass
+                else:
+                    try:
+                        msg = message.content[7:]
+                        embed = discord.Embed(colour=0x1DDB16, timestamp=message.created_at, title="Various Games Server 공지")
+                        embed.add_field(name="-----------------------------------------", value=msg, inline=True)
+                        embed.set_footer(text=f"https://discord.gg/3wX5cHh")
+                        await i.send(embed=embed)
+                    except:
                         pass
-                    else:
-                        try:
-                            msg = message.content[7:]
-                            embed = discord.Embed(colour=0x1DDB16, timestamp=message.created_at, title="Various Games Server 공지")
-                            embed.add_field(name="-----------------------------------------", value=msg, inline=True)
-                            embed.set_footer(text=f"https://discord.gg/3wX5cHh")
-                            await i.send(embed=embed)
-                        except:
-                            pass
-            else:
-                await message.channel.send("당신은 권한이 없기 때문에 전체DM 명령어를 사용하실 수 없습니다.")
                     
     if message.content.startswith("토리 멍청이"):
         await message.channel.send("ㅇㅈ")
