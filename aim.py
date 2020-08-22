@@ -1,12 +1,7 @@
 import discord
 import asyncio
 import datetime
-import random
-import openpyxl
-import configparser
-from json import loads
-from discord.ext import commands
-from discord.ext.commands import bot
+import os
 
 client = discord.Client()
 
@@ -67,5 +62,5 @@ async def on_message(message):
             await message.channel.send("1. !sb dm <할 말> \n - 전체 DM 공지를 보냅니다\n2. !sb clean <숫자> \n - 정한 숫자만큼 밑에서부터 메세지를 삭제합니다.")
 
 
-
-client.run('NzQ1NDI2NDU4NTcwMzkxNjIw.XzxmfQ.3j_wWGecyPngDFe2BHzyohg7itE')
+access_token = os.environ["BOT_TOKEN"]
+client.run('access_token')
