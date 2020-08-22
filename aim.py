@@ -34,6 +34,8 @@ async def on_message(message):
         await message.channel.send("ㅇㅈ")
     if message.content.startswith("Tori is L"):
         await message.channel.send("LLLLLLLLL")
+    if message.content.startswith("tori is L"):
+        await message.channel.send("LLLLLLLLL")
     if message.content.startswith("토리멍청이"):
         await message.channel.send("ㅇㅈ")
     if message.content.startswith("반짝반짝 희벼리"):
@@ -44,6 +46,8 @@ async def on_message(message):
         await message.channel.send("마트롤시카?!")
     if message.content.startswith("솔린디가 누구임"):
         await message.channel.send("나임")
+    if message.content.startswith("도토리묵")
+        await message.channel.send("도토리묵 맛있겠다")
 
     if message.content.startswith("!sb clean"):
         if message.author.guild_permissions.manage_messages:
