@@ -31,7 +31,7 @@ async def on_message(message):
                     except:
                         pass
         else:
-            await message.channel.send("당신은 권한이 없기 때문에 채팅청소 명령어를 사용하실 수 없습니다.")
+            await message.channel.send("당신은 권한이 없기 때문에 전체DM 명령어를 사용하실 수 없습니다.")
                     
     if message.content.startswith("토리 멍청이"):
         await message.channel.send("ㅇㅈ")
