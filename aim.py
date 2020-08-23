@@ -8,7 +8,7 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    print("봇실행이 시작되었습니다.")
+    print("Bot is Ready.(24h online)")
     game = discord.Game('L')
     await client.change_presence(status=discord.Status.online, activity=game)
 
