@@ -70,12 +70,6 @@ async def on_message(message):
             await message.channel.send("당신은 권한이 없기 때문에 채팅청소 명령어를 사용하실 수 없습니다.")
 
     message_content = message.content
-    fc = message_content.find("ㅗ")
-    print(fc)
-    if fc >= 0:
-        await message.channel.send("착한 말 쓰자^^")
-        await message.delete()
-    
     ws = message_content.find("ㅈㄴ")
     print(ws)
     if ws >= 0:
