@@ -69,37 +69,6 @@ async def on_message(message):
         else:
             await message.channel.send("당신은 권한이 없기 때문에 채팅청소 명령어를 사용하실 수 없습니다.")
 
-    message_content = message.content
-    ws = message_content.find("ㅈㄴ")
-    print(ws)
-    if ws >= 0:
-        await message.channel.send("거 좀 바른말 고운말좀 씁시다 거 참")
-    
-    tq = message.content.find("ㅅㅂ")
-    print(tq)
-    if tq >= 0:
-        await message.channel.send("바른말 안쓰면 토리")
-    
-    dut = message.content.find("엿")
-    print(dut)
-    if dut >= 0:
-        await message.channel.send("가운데 손가락은 나빠요 @_@")
-    
-    jn = message_content.find("존나")
-    print(jn)
-    if jn >= 0:
-        await message.channel.send("바른말 고운말^^")
-    
-    tlqkf = message_content.find("시발")
-    print(tlqkf)
-    if tlqkf >= 0:
-        await message.channel.send("반-사^^")
-        
-    Tiqkf = message_content.find("씨발")
-    print(Tiqkf)
-    if Tiqkf >= 0:
-        await message.channel.send("반-------사")
-
     if message.content.startswith("!sb"):
         mg = message.content[4:]
         if str(mg) == str("help"):
