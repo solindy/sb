@@ -34,7 +34,7 @@ async def on_message(message):
                     except:
                         pass
         else:
-            await message.channel.send("당신은 권한이 없기 때문에 채팅청소 명령어를 사용하실 수 없습니다.")
+            await message.channel.send("ERROR : You Do Not Have Permissions")
 
     if message.content.startswith("토리 멍청이"):
         await message.channel.send("ㅇㅈ")
@@ -67,13 +67,23 @@ async def on_message(message):
             except ValueError:
                 await message.channel.send("청소하실 메시지의 **수**를 입력해 주세요.")
         else:
-            await message.channel.send("당신은 권한이 없기 때문에 채팅청소 명령어를 사용하실 수 없습니다.")
+            await message.channel.send("ERROR : You Do Not Have Permissions")
+    
+    if message.content.startswith("!sb vote"):
+        if message.author.guild_permissions.manage_messages:
+            ej = message.content[9:]
+            emoji = await message.channel.send("투표해 주세요! " + "**" + ej + "**" + " (찬/반, 중복투표 금지)")
+            await emoji.add_reaction("\U0001F44D")
+            await emoji.add_reaction("\U0001F44E")
+            return
+        else:
+            await message.channel.send("ERROR : You Do Not Have Permissions")
 
     if message.content.startswith("!sb"):
         mg = message.content[4:]
         if str(mg) == str("help"):
             await message.channel.send(
-                "1. !sb dm <할 말> \n - 전체 DM 공지를 보냅니다\n2. !sb clean <숫자> \n - 정한 숫자만큼 밑에서부터 메세지를 삭제합니다 \n3. !sb msg \n - 사용 가능한 메시지 채팅 반응을 모두 표시합니다")
+                "1. !sb dm <할 말> \n - 전체 DM 공지를 보냅니다\n2. !sb clean <숫자> \n - 정한 숫자만큼 밑에서부터 메세지를 삭제합니다 \n3. !sb msg \n - 사용 가능한 메시지 채팅 반응을 모두 표시합니다 \n4. !sb vote \n - 투표를 진행합니다")
         if str(mg) == str("msg"):
             await message.channel.send("토리 멍청이 / Tori is L / 반짝반짝 희벼리 / 마트롤시카 / 솔린디가 누구임 / 도토리묵")
 
