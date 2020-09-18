@@ -1,7 +1,9 @@
 import discord
 import asyncio
 import datetime
+import random
 import os
+from time import sleep
 
 client = discord.Client()
 
@@ -13,12 +15,11 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=game)
 
 
-# !dm {할말}로 전체DM 전송
 @client.event
 async def on_message(message):
     if message.author.bot:
         return None
-    if message.content.startswith('!sb dm'):
+    if message.content.startswith("!sb dm"):
         if message.author.guild_permissions.manage_messages:
             for i in message.guild.members:
                 if i.bot == True:
@@ -35,6 +36,8 @@ async def on_message(message):
                         pass
         else:
             await message.channel.send("ERROR : You Do Not Have Permissions")
+
+
 
     if message.content.startswith("토리 멍청이"):
         await message.channel.send("ㅇㅈ")
@@ -62,13 +65,13 @@ async def on_message(message):
                 if str(amount) >= str(51):
                     await message.channel.send("50 이하의 수를 입력해 주세요.")
                 else:
-                    await message.channel.purge(limit=int(amount))
+                    await message.channel.purge(limit=int(amount) + 1)
                     await message.channel.send(f"**{amount}**개의 메시지를 지웠습니다.")
             except ValueError:
                 await message.channel.send("청소하실 메시지의 **수**를 입력해 주세요.")
         else:
             await message.channel.send("ERROR : You Do Not Have Permissions")
-    
+
     if message.content.startswith("!sb vote"):
         if message.author.guild_permissions.manage_messages:
             ej = message.content[9:]
@@ -79,16 +82,40 @@ async def on_message(message):
         else:
             await message.channel.send("ERROR : You Do Not Have Permissions")
 
+    if message.content.startswith("!sb rn"):
+        try:
+            num = message.content[7:]
+            picked = random.randint(int("1"), int(num))
+            await message.channel.send(f'뽑힌 숫자는 **{str(picked)}** 입니다')
+        except IndexError:
+            await message.channel.send("무슨 숫자를 뽑을지 알려주세요")
+        except ValueError:
+            await message.channel.send("정수를 입력해주세요")
+        except ZeroDivisionError:
+            await message.channel.send("0으로 나눌 수 없습니다")
+    if message.content.startswith("!sb randomnumber"):
+        try:
+            num1 = message.content[17:]
+            picked1 = random.randint(int("1"), int(num1))
+            await message.channel.send(f'뽑힌 숫자는 **{str(picked1)}** 입니다')
+        except IndexError:
+            await message.channel.send("무슨 숫자를 뽑을지 알려주세요")
+        except ValueError:
+            await message.channel.send("정수를 입력해주세요")
+        except ZeroDivisionError:
+            await message.channel.send("0으로 나눌 수 없습니다")
+
     if message.content.startswith("!sb"):
         mg = message.content[4:]
         if str(mg) == str("help"):
             embed = discord.Embed(title="Solindy Bot Help", description="솔린디 봇 도움말", color=0x00aaaa)
-            embed.add_field(name="1. !sb dm <할 말>", value=" - 전체 DM 공지를 보냅니다", inline=False)
-            embed.add_field(name="2. !sb clean <숫자>", value=" - 정한 숫자만큼 밑에서부터 메세지를 삭제합니다", inline=False)
-            embed.add_field(name="3. !sb msg", value=" - 사용 가능한 메시지 채팅 반응을 모두 표시합니다", inline=False)
-            embed.add_field(name="4. !sb vote <주제>", value=" - 주제에 대한 찬반 투표를 진행합니다", inline=False)
+            embed.add_field(name="1. `!sb dm <할 말>`", value=" - 전체 DM 공지를 보냅니다", inline=False)
+            embed.add_field(name="2. `!sb clean <숫자>`", value=" - 정한 숫자만큼 밑에서부터 메세지를 삭제합니다", inline=False)
+            embed.add_field(name="3. `!sb msg`", value=" - 사용 가능한 메시지 채팅 반응을 모두 표시합니다", inline=False)
+            embed.add_field(name="4. `!sb vote <주제>`", value=" - 주제에 대한 찬반 투표를 진행합니다", inline=False)
+            embed.add_field(name="5. `!sb randomnumber/rn <정수>`", value=" 1부터 설정한 숫자까지 랜덤으로 한 숫자를 뽑습니다", inline=False)
             await message.channel.send(embed=embed)
-        if str(mg) == str("msg"):
+        elif str(mg) == str("msg"):
             await message.channel.send("토리 멍청이 / Tori is L / 반짝반짝 희벼리 / 마트롤시카 / 솔린디가 누구임 / 도토리묵")
 
 access_token = os.environ["BOT_TOKEN"]
