@@ -13,6 +13,7 @@ async def on_ready():
     game = discord.Game("Verious Games Server")
     await app.change_presence(status=discord.Status.online, activity=game)
 
+app.remove_command("help")
 
 @app.command(pass_context=True)
 async def dm(ctx, text):
@@ -86,13 +87,16 @@ async def _Puresoul(ctx, role, member : discord.Member=None):
         await ctx.channel.send("당신은 권한이 없기 때문에 이 명령어를 사용할 수 없습니다")
 
 @app.command(pass_context=True)
-async def cmdhelp(ctx):
+async def help(ctx):
     embed = discord.Embed(title="Solindy Bot Help", description="솔린디 봇 도움말", color=0x00aaaa)
     embed.add_field(name="1. `!sb dm <할 말>`", value=" - 전체 DM 공지를 보냅니다", inline=False)
     embed.add_field(name="2. `!sb clean <숫자>`", value=" - 정한 숫자만큼 밑에서부터 메세지를 삭제합니다", inline=False)
     embed.add_field(name="3. `!sb role <역할 이름> <유저 멘션>`", value=" - 멘션한 유저에게 해당 역할을 지급합니다", inline=False)
-    embed.add_field(name="4. `!sb randomnumber/rn <숫자 1> <숫자 2>`", value=" <숫자 1> 에서 설정한 숫자부터 설정한 <숫자 2> 에서 설정한 숫자까지 랜덤으로 하나의 숫자를 뽑습니다", inline=False)
+    embed.add_field(name="4. `!sb randomnumber/rn <숫자 1> <숫자 2>`", value=" - <숫자 1> 에서 설정한 숫자부터 설정한 <숫자 2> 에서 설정한 숫자까지 랜덤으로 하나의 숫자를 뽑습니다", inline=False)
+    embed.add_field(name="5. `!sb help`", value=" - 현재 도움말 창을 출력합니다", inline=False)
     await ctx.channel.send(embed=embed)
+    
+
 
 access_token = os.environ["BOT_TOKEN"]
 app.run(access_token)
