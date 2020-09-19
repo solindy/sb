@@ -4,119 +4,101 @@ import datetime
 import random
 import os
 from time import sleep
+from discord.utils import get
+from discord.ext import commands
 
-client = discord.Client()
+app = commands.Bot(command_prefix='!sb ')
 
-
-@client.event
+@app.event
 async def on_ready():
-    print("Bot is Ready.(24h online)")
-    game = discord.Game('L')
-    await client.change_presence(status=discord.Status.online, activity=game)
+    print("봇 온라인")
+    game = discord.Game("Verious Games Server")
+    await app.change_presence(status=discord.Status.online, activity=game)
 
 
-@client.event
-async def on_message(message):
-    if message.author.bot:
+@app.command(pass_context=True)
+async def dm(ctx, text):
+    if ctx.message.author.bot:
         return None
-    if message.content.startswith("!sb dm"):
-        if message.author.guild_permissions.manage_messages:
-            for i in message.guild.members:
-                if i.bot == True:
-                    pass
-                else:
-                    try:
-                        msg = message.content[7:]
-                        embed = discord.Embed(colour=0x1DDB16, timestamp=message.created_at,
+    if ctx.message.author.guild_permissions.manage_messages:
+        for i in ctx.message.guild.members:
+            if i.bot == True:
+                pass
+            else:
+                try:
+                    msg = ctx.message.content[7:]
+                    embed = discord.Embed(colour=0x1DDB16, timestamp=ctx.message.created_at,
                                               title="Various Games Server 공지")
-                        embed.add_field(name="-----------------------------------------", value=msg, inline=True)
-                        embed.set_footer(text=f"https://discord.gg/3wX5cHh")
-                        await i.send(embed=embed)
-                    except:
-                        pass
-        else:
-            await message.channel.send("ERROR : You Do Not Have Permissions")
+                    embed.add_field(name="-----------------------------------------", value=msg, inline=True)
+                    embed.set_footer(text=f"https://discord.gg/3wX5cHh")
+                    await i.send(embed=embed)
+                except:
+                    pass
+    else:
+        await ctx.message.channel.send("당신은 권한이 없기 때문에 이 명령어를 사용할 수 없습니다")
 
-
-
-    if message.content.startswith("토리 멍청이"):
-        await message.channel.send("ㅇㅈ")
-    if message.content.startswith("Tori is L"):
-        await message.channel.send("LLLLLLLLL")
-    if message.content.startswith("tori is L"):
-        await message.channel.send("LLLLLLLLL")
-    if message.content.startswith("토리멍청이"):
-        await message.channel.send("ㅇㅈ")
-    if message.content.startswith("반짝반짝 희벼리"):
-        await message.channel.send("멍청하게 비치네")
-    if message.content.startswith("반짝반짝 희별이"):
-        await message.channel.send("멍청하게 비치네")
-    if message.content.startswith("마트롤시카"):
-        await message.channel.send("마트롤시카?!")
-    if message.content.startswith("솔린디가 누구임"):
-        await message.channel.send("나임")
-    if message.content.startswith("도토리묵"):
-        await message.channel.send("도토리묵 맛있겠다")
-
-    if message.content.startswith("!sb clean"):
-        if message.author.guild_permissions.manage_messages:
-            try:
-                amount = message.content[10:]
-                if str(amount) >= str(51):
-                    await message.channel.send("50 이하의 수를 입력해 주세요.")
-                else:
-                    await message.channel.purge(limit=int(amount) + 1)
-                    await message.channel.send(f"**{amount}**개의 메시지를 지웠습니다.")
-            except ValueError:
-                await message.channel.send("청소하실 메시지의 **수**를 입력해 주세요.")
-        else:
-            await message.channel.send("ERROR : You Do Not Have Permissions")
-
-    if message.content.startswith("!sb vote"):
-        if message.author.guild_permissions.manage_messages:
-            ej = message.content[9:]
-            emoji = await message.channel.send("투표해 주세요! " + "**" + ej + "**" + " (찬/반, 중복투표 금지)")
-            await emoji.add_reaction("\U0001F44D")
-            await emoji.add_reaction("\U0001F44E")
-            return
-        else:
-            await message.channel.send("ERROR : You Do Not Have Permissions")
-
-    if message.content.startswith("!sb rn"):
+@app.command(pass_context=True)
+async def clean(ctx, amount):
+    if ctx.message.author.guild_permissions.manage_messages:
         try:
-            num = message.content[7:]
-            picked = random.randint(int("1"), int(num))
-            await message.channel.send(f'뽑힌 숫자는 **{str(picked)}** 입니다')
-        except IndexError:
-            await message.channel.send("무슨 숫자를 뽑을지 알려주세요")
+            if str(amount) >= str(51):
+                await ctx.send("50 이하의 수를 입력해 주세요.")
+            else:
+                await ctx.message.channel.purge(limit=int(amount) + 1)
+                await ctx.send(f"**{amount}**개의 메시지를 지웠습니다.")
         except ValueError:
-            await message.channel.send("정수를 입력해주세요")
-        except ZeroDivisionError:
-            await message.channel.send("0으로 나눌 수 없습니다")
-    if message.content.startswith("!sb randomnumber"):
-        try:
-            num1 = message.content[17:]
-            picked1 = random.randint(int("1"), int(num1))
-            await message.channel.send(f'뽑힌 숫자는 **{str(picked1)}** 입니다')
-        except IndexError:
-            await message.channel.send("무슨 숫자를 뽑을지 알려주세요")
-        except ValueError:
-            await message.channel.send("정수를 입력해주세요")
-        except ZeroDivisionError:
-            await message.channel.send("0으로 나눌 수 없습니다")
+            await ctx.send("청소하실 메시지의 **수**를 입력해 주세요.")
+    else:
+        await ctx.send("당신은 권한이 없기 때문에 이 명령어를 사용할 수 없습니다")
 
-    if message.content.startswith("!sb"):
-        mg = message.content[4:]
-        if str(mg) == str("help"):
-            embed = discord.Embed(title="Solindy Bot Help", description="솔린디 봇 도움말", color=0x00aaaa)
-            embed.add_field(name="1. `!sb dm <할 말>`", value=" - 전체 DM 공지를 보냅니다", inline=False)
-            embed.add_field(name="2. `!sb clean <숫자>`", value=" - 정한 숫자만큼 밑에서부터 메세지를 삭제합니다", inline=False)
-            embed.add_field(name="3. `!sb msg`", value=" - 사용 가능한 메시지 채팅 반응을 모두 표시합니다", inline=False)
-            embed.add_field(name="4. `!sb vote <주제>`", value=" - 주제에 대한 찬반 투표를 진행합니다", inline=False)
-            embed.add_field(name="5. `!sb randomnumber/rn <정수>`", value=" 1부터 설정한 숫자까지 랜덤으로 한 숫자를 뽑습니다", inline=False)
-            await message.channel.send(embed=embed)
-        elif str(mg) == str("msg"):
-            await message.channel.send("토리 멍청이 / Tori is L / 반짝반짝 희벼리 / 마트롤시카 / 솔린디가 누구임 / 도토리묵")
+@app.command(pass_context=True)
+async def rn(ctx, num1, num2):
+    try:
+        picked = random.randint(int(num1), int(num2))
+        await ctx.send(f'뽑힌 숫자는 **{str(picked)}** 입니다')
+    except IndexError:
+        await ctx.send("무슨 숫자를 뽑을지 알려주세요")
+    except ValueError:
+        await ctx.channel.send("정수를 입력해주세요")
+    except ZeroDivisionError:
+        await ctx.channel.send("0으로 나눌 수 없습니다")
+
+@app.command(pass_context=True)
+async def randomnumber(ctx, n1, n2):
+    try:
+        pickled = random.randint(int(n1), int(n2))
+        await ctx.send(f'뽑힌 숫자는 **{str(pickled)}** 입니다')
+    except IndexError:
+        await ctx.send("무슨 숫자를 뽑을지 알려주세요")
+    except ValueError:
+        await ctx.channel.send("정수를 입력해주세요")
+    except ZeroDivisionError:
+        await ctx.channel.send("0으로 나눌 수 없습니다")
+
+@app.command(name="role", pass_context=True)
+async def _Puresoul(ctx, role, member : discord.Member=None):
+    if ctx.message.author.guild_permissions.manage_messages:
+        try:
+            member = member or ctx.message.author
+            await member.add_roles(get(ctx.guild.roles, name=role))
+            await ctx.channel.send(str(member)+"에게 역할이 적용되었습니다.")
+        except:
+            await ctx.channel.send("뭘 잘못 쳤는진 모르겠지만 쨌든 제대로 입력좀")
+    else:
+        await ctx.channel.send("당신은 권한이 없기 때문에 이 명령어를 사용할 수 없습니다")
+
+@app.command(pass_context=True)
+async def msg(ctx):
+    await ctx.message.channel.send("토리 멍청이 / Tori is L / 반짝반짝 희벼리 / 마트롤시카 / 솔린디가 누구임 / 도토리묵")
+
+@app.command(pass_context=True)
+async def cmdhelp(ctx):
+    embed = discord.Embed(title="Solindy Bot Help", description="솔린디 봇 도움말", color=0x00aaaa)
+    embed.add_field(name="1. `!sb dm <할 말>`", value=" - 전체 DM 공지를 보냅니다", inline=False)
+    embed.add_field(name="2. `!sb clean <숫자>`", value=" - 정한 숫자만큼 밑에서부터 메세지를 삭제합니다", inline=False)
+    embed.add_field(name="3. `!sb role <역할 이름> <유저 멘션>`", value=" - 멘션한 유저에게 해당 역할을 지급합니다", inline=False)
+    embed.add_field(name="4. `!sb randomnumber/rn <숫자 1> <숫자 2>`", value=" <숫자 1> 에서 설정한 숫자부터 설정한 <숫자 2> 에서 설정한 숫자까지 랜덤으로 하나의 숫자를 뽑습니다", inline=False)
+    await ctx.channel.send(embed=embed)
 
 access_token = os.environ["BOT_TOKEN"]
-client.run(access_token)
+app.run(access_token)
