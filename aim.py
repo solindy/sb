@@ -88,10 +88,6 @@ async def _Puresoul(ctx, role, member : discord.Member=None):
         await ctx.channel.send("당신은 권한이 없기 때문에 이 명령어를 사용할 수 없습니다")
 
 @app.command(pass_context=True)
-async def msg(ctx):
-    await ctx.message.channel.send("토리 멍청이 / Tori is L / 반짝반짝 희벼리 / 마트롤시카 / 솔린디가 누구임 / 도토리묵")
-
-@app.command(pass_context=True)
 async def cmdhelp(ctx):
     embed = discord.Embed(title="Solindy Bot Help", description="솔린디 봇 도움말", color=0x00aaaa)
     embed.add_field(name="1. `!sb dm <할 말>`", value=" - 전체 DM 공지를 보냅니다", inline=False)
