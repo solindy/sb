@@ -88,13 +88,48 @@ async def _Puresoul(ctx, role, member : discord.Member=None):
         
 @app.command(pass_context=True)
 async def help(ctx):
-    embed = discord.Embed(title="Solindy Bot Help", description="솔린디 봇 도움말", color=0x00aaaa)
-    embed.add_field(name="1. `!sb dm <할 말>`", value=" - 전체 DM 공지를 보냅니다", inline=False)
-    embed.add_field(name="2. `!sb clean <숫자>`", value=" - 정한 숫자만큼 밑에서부터 메세지를 삭제합니다", inline=False)
-    embed.add_field(name="3. `!sb role <역할 이름> <유저 멘션>`", value=" - 멘션한 유저에게 해당 역할을 지급합니다", inline=False)
-    embed.add_field(name="4. `!sb randomnumber/rn <숫자 1> <숫자 2>`", value=" - <숫자 1> 에서 설정한 숫자부터 설정한 <숫자 2> 에서 설정한 숫자까지 랜덤으로 하나의 숫자를 뽑습니다", inline=False)
-    embed.add_field(name="5. `!sb help`", value=" - 현재 도움말 창을 출력합니다", inline=False)
-    await ctx.channel.send(embed=embed)
+    cmd = ctx.message.content[9:]
+    if cmd == "":
+        embed = discord.Embed(title="Solindy Bot Help", description="솔린디 봇 도움말", color=0x00aaaa)
+        embed.add_field(name="관리자 전용", value=" `!sb dm` `!sb clean` `!sb role`", inline=False)
+        embed.add_field(name="기본",  value=" `!sb rn` \n ", inline=False)
+        embed.add_field(name="명령어는 추후 추가될 수 있습니다", value="\n `!sb help <명령어>` 명령어를 통해 명령어의 상세정보를 확인할 수 있습니다", inline=False)
+        await ctx.channel.send(embed=embed)
+    elif cmd == "dm":
+        embed = discord.Embed(title="명령어 - DM", description="<할 말> 에 쓰여있는 말로 전체 DM 공지를 보냅니다", color=0x00aaaa)
+        embed.add_field(name="사용법", value="`!sb dm <할 말>`")
+        await ctx.channel.send(embed=embed)
+    elif cmd == "clean":
+        embed = discord.Embed(title="명령어 - clean", description="<숫자> 에 쓰여있는 숫자만큼 밑에서부터 메시지를 삭제합니다", color=0x00aaaa)
+        embed.add_field(name="사용법", value="`!sb clean <숫자>`")
+        await ctx.channel.send(embed=embed)
+    elif cmd == "role":
+        embed = discord.Embed(title="명령어 - role", description="설정한 역할을 멘션한 유저에게 적용합니다", color=0x00aaaa)
+        embed.add_field(name="사용법", value="`!sb role <역할 이름> <유저 멘션>`")
+        await ctx.channel.send(embed=embed)
+    elif cmd == "randomnumber":
+        embed = discord.Embed(title="명령어 - RandomNumber", description="설정한 숫자의 범위 안에서 랜덤한 숫자를 하나 뽑습니다", color=0x00aaaa)
+        embed.add_field(name="사용법", value="`!sb randomnumber/rn <숫자 1> <숫자 2>`")
+        await ctx.channel.send(embed=embed)
+    elif cmd == "rn":
+        embed = discord.Embed(title="명령어 - RandomNumber", description="설정한 숫자의 범위 안에서 랜덤한 숫자를 하나 뽑습니다", color=0x00aaaa)
+        embed.add_field(name="사용법", value="`!sb randomnumber/rn <숫자 1> <숫자 2>`")
+        await ctx.channel.send(embed=embed)
+    else:
+        await ctx.channel.send("상세정보를 확인할 명령어를 입력해주세요")
+
+@app.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        return
+    elif isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("값을 입력해주세요")
+    elif isinstance(error, commands.BadArgument):
+        await ctx.send("값이 다릅니다")
+    else:
+        embed = discord.Embed(title="오류가 발생했습니다", description=" ", color=0xFF0000)
+        embed.add_field(name="상세", value=f"```{error}```")
+        await ctx.send(embed=embed)
     
 
 
