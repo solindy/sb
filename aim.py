@@ -88,11 +88,11 @@ async def _Puresoul(ctx, role, member : discord.Member=None):
 
 @app.command(name="솔멍청",pass_context=True)
 async def _Solmung(ctx):
-    if ctx.send("해당 명령어를 찾을 수 없습니다!")
+    await ctx.send("해당 명령어를 찾을 수 없습니다!")
 
 @app.command(name="토리바보",pass_context=True)
 async def _Solmung(ctx):
-    if ctx.send("인정합니다!")
+    await ctx.send("인정합니다!")
         
 @app.command(pass_context=True)
 async def help(ctx):
