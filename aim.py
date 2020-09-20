@@ -89,7 +89,7 @@ async def _Role(ctx, role, member : discord.Member=None):
 @app.command(name="ps", pass_context=True)
 async def _Puresoul(ctx):
     pure = ctx.message.content[6:]
-    if pure == "":
+    if pure == "add":
         member = ctx.message.author
         await member.add_roles(get(ctx.guild.roles, name="순수한 영혼"))
         await ctx.send("👼 순수한 영혼 역할 지급이 완료되었습니다 👼 이제 욕 사용가능 채팅방이 보이지 않게 됩니다")
@@ -97,6 +97,8 @@ async def _Puresoul(ctx):
         member = ctx.message.author
         await member.remove_roles(get(ctx.guild.roles, name="순수한 영혼"))
         await ctx.send("👼 순수한 영혼 역할이 제거되었습니다 👼 이제 욕 사용가능 채팅방이 보이게 됩니다")
+        else:
+        await ctx.send("add 또는 remove를 입력해주세요")
         
 @app.command(pass_context=True)
 async def help(ctx):
