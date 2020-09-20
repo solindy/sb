@@ -97,7 +97,7 @@ async def _Puresoul(ctx):
         member = ctx.message.author
         await member.remove_roles(get(ctx.guild.roles, name="순수한 영혼"))
         await ctx.send("👼 순수한 영혼 역할이 제거되었습니다 👼 이제 욕 사용가능 채팅방이 보이게 됩니다")
-        else:
+    else:
         await ctx.send("add 또는 remove를 입력해주세요")
         
 @app.command(pass_context=True)
