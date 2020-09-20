@@ -75,7 +75,7 @@ async def randomnumber(ctx, n1, n2):
         await ctx.channel.send("0으로 나눌 수 없습니다")
 
 @app.command(name="role", pass_context=True)
-async def _Puresoul(ctx, role, member : discord.Member=None):
+async def _Role(ctx, role, member : discord.Member=None):
     if ctx.message.author.guild_permissions.manage_messages:
         try:
             member = member or ctx.message.author
@@ -86,13 +86,25 @@ async def _Puresoul(ctx, role, member : discord.Member=None):
     else:
         await ctx.channel.send("당신은 권한이 없기 때문에 이 명령어를 사용할 수 없습니다")
         
+@app.command(name="ps", pass_context=True)
+async def _Puresoul(ctx):
+    pure = ctx.message.content[6:]
+    if pure == "":
+        member = ctx.message.author
+        await member.add_roles(get(ctx.guild.roles, name="순수한 영혼"))
+        await ctx.send("👼 순수한 영혼 역할 지급이 완료되었습니다 👼 이제 욕 사용가능 채팅방이 보이지 않게 됩니다")
+    elif pure == "remove":
+        member = ctx.message.author
+        await member.remove_roles(get(ctx.guild.roles, name="순수한 영혼"))
+        await ctx.send("👼 순수한 영혼 역할이 제거되었습니다 👼 이제 욕 사용가능 채팅방이 보이게 됩니다")
+        
 @app.command(pass_context=True)
 async def help(ctx):
     cmd = ctx.message.content[9:]
     if cmd == "":
         embed = discord.Embed(title="Solindy Bot Help", description="솔린디 봇 도움말", color=0x00aaaa)
         embed.add_field(name="관리자 전용", value=" `!sb dm` `!sb clean` `!sb role`", inline=False)
-        embed.add_field(name="기본",  value=" `!sb rn` \n ", inline=False)
+        embed.add_field(name="기본",  value=" `!sb rn` `!sb ps` \n ", inline=False)
         embed.add_field(name="명령어는 추후 추가될 수 있습니다", value="\n `!sb help <명령어>` 명령어를 통해 명령어의 상세정보를 확인할 수 있습니다", inline=False)
         await ctx.channel.send(embed=embed)
     elif cmd == "dm":
@@ -115,6 +127,10 @@ async def help(ctx):
         embed = discord.Embed(title="명령어 - RandomNumber", description="설정한 숫자의 범위 안에서 랜덤한 숫자를 하나 뽑습니다", color=0x00aaaa)
         embed.add_field(name="사용법", value="`!sb randomnumber/rn <숫자 1> <숫자 2>`")
         await ctx.channel.send(embed=embed)
+    elif cmd == "ps":
+        embed = discord.Embed(title="명령어 - Puresoul", description="순수한 영혼 역할을 지급합니다. 순수한 영혼 역할을 가지고 있을 시 욕 사용가능 채팅방이 보이지 않게 됩니다", color=0x00aaaa)
+        embed.add_field(name="사용법", value="`!sb ps`")
+        await ctx.channel.send(embed=embed)
     else:
         await ctx.channel.send("상세정보를 확인할 명령어를 입력해주세요")
 
@@ -131,7 +147,5 @@ async def on_command_error(ctx, error):
         embed.add_field(name="상세", value=f"```{error}```")
         await ctx.send(embed=embed)
     
-
-
 access_token = os.environ["BOT_TOKEN"]
 app.run(access_token)
