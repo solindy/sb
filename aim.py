@@ -131,7 +131,7 @@ async def help(ctx):
         await ctx.channel.send(embed=embed)
     elif cmd == "ps":
         embed = discord.Embed(title="명령어 - Puresoul", description="순수한 영혼 역할을 지급합니다. 순수한 영혼 역할을 가지고 있을 시 욕 사용가능 채팅방이 보이지 않게 됩니다", color=0x00aaaa)
-        embed.add_field(name="사용법", value="`!sb ps`")
+        embed.add_field(name="사용법", value="`!sb ps add/remove`")
         await ctx.channel.send(embed=embed)
     else:
         await ctx.channel.send("상세정보를 확인할 명령어를 입력해주세요")
