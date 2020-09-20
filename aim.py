@@ -85,14 +85,6 @@ async def _Puresoul(ctx, role, member : discord.Member=None):
             await ctx.channel.send("뭘 잘못 쳤는진 모르겠지만 쨌든 제대로 입력좀")
     else:
         await ctx.channel.send("당신은 권한이 없기 때문에 이 명령어를 사용할 수 없습니다")
-
-@app.command(name="솔멍청",pass_context=True)
-async def _Solmung(ctx):
-    await ctx.send("해당 명령어를 찾을 수 없습니다!")
-
-@app.command(name="토리바보",pass_context=True)
-async def _Solmung(ctx):
-    await ctx.send("인정합니다!")
         
 @app.command(pass_context=True)
 async def help(ctx):
