@@ -1,4 +1,4 @@
 discord.py==1.4.1
 asyncio==3.4.3
 datetime==4.3
-ytsearch==1.1.0.post1
+ytsearch==1.1.0
