@@ -100,14 +100,53 @@ async def _Puresoul(ctx):
     else:
         await ctx.send("add 또는 remove를 입력해주세요")
         
+@app.command(name="search", pass_context=True)
+async def _Searchyt(ctx, sc):
+    if sc == "":
+        await ctx.send("무엇을 검색할지 알려주세요")
+    else:
+        keyword = sc
+        yt = yt_search.build("AIzaSyDPNZ8P5HakWKjB6H_xGA0Ddjw8zevxkWc")
+        search_result = yt.search(keyword, sMax=5, sType=["video"])
+
+        t = search_result.title
+        id = search_result.videoId
+        video = "https://www.youtube.com/watch?v="
+        t1 = len(t)
+        id1 = len(id)
+        del t[0]
+        del id[0]
+        await ctx.send("영상 제목 : " + str(t[0]))
+        await ctx.send("영상 url : " + video + str(id[0]))
+
+@app.command(name="sc", pass_context=True)
+async def _Searchyt(ctx, s):
+    if s == "":
+        await ctx.send("무엇을 검색할지 알려주세요")
+    else:
+        keyword = s
+        yt = yt_search.build("AIzaSyDPNZ8P5HakWKjB6H_xGA0Ddjw8zevxkWc")
+        search_result = yt.search(keyword, sMax=5, sType=["video"])
+
+        t = search_result.title
+        id = search_result.videoId
+        video = "https://www.youtube.com/watch?v="
+        t1 = len(t)
+        id1 = len(id)
+        del t[0]
+        del id[0]
+        await ctx.send("영상 제목 : " + str(t[0]))
+        await ctx.send("영상 url : " + video + str(id[0]))
+        
 @app.command(pass_context=True)
 async def help(ctx):
     cmd = ctx.message.content[9:]
     if cmd == "":
         embed = discord.Embed(title="Solindy Bot Help", description="솔린디 봇 도움말", color=0x00aaaa)
         embed.add_field(name="관리자 전용", value=" `!sb dm` `!sb clean` `!sb role`", inline=False)
-        embed.add_field(name="기본",  value=" `!sb rn` `!sb ps` \n ", inline=False)
-        embed.add_field(name="명령어는 추후 추가될 수 있습니다", value="\n `!sb help <명령어>` 명령어를 통해 명령어의 상세정보를 확인할 수 있습니다", inline=False)
+        embed.add_field(name="기본", value=" `!sb rn` `!sb ps` `!sb sc` \n ", inline=False)
+        embed.add_field(name="명령어는 추후 추가될 수 있습니다", value="\n `!sb help <명령어>` 명령어를 통해 명령어의 상세정보를 확인할 수 있습니다",
+                        inline=False)
         await ctx.channel.send(embed=embed)
     elif cmd == "dm":
         embed = discord.Embed(title="명령어 - DM", description="<할 말> 에 쓰여있는 말로 전체 DM 공지를 보냅니다", color=0x00aaaa)
@@ -132,6 +171,14 @@ async def help(ctx):
     elif cmd == "ps":
         embed = discord.Embed(title="명령어 - Puresoul", description="순수한 영혼 역할을 지급합니다. 순수한 영혼 역할을 가지고 있을 시 욕 사용가능 채팅방이 보이지 않게 됩니다", color=0x00aaaa)
         embed.add_field(name="사용법", value="`!sb ps add/remove`")
+        await ctx.channel.send(embed=embed)
+    elif cmd == "search":
+        embed = discord.Embed(title="명령어 - search", description="유튜브 영상을 검색합니다", color=0x00aaaa)
+        embed.add_field(name="사용법", value="`!sb search/sc <검색할 글자>`")
+        await ctx.channel.send(embed=embed)
+    elif cmd == "sc":
+        embed = discord.Embed(title="명령어 - search", description="유튜브 영상을 검색합니다", color=0x00aaaa)
+        embed.add_field(name="사용법", value="`!sb search/sc <검색할 글자>`")
         await ctx.channel.send(embed=embed)
     else:
         await ctx.channel.send("상세정보를 확인할 명령어를 입력해주세요")
