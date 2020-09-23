@@ -86,6 +86,19 @@ async def _Role(ctx, role, member : discord.Member=None):
     else:
         await ctx.channel.send("당신은 권한이 없기 때문에 이 명령어를 사용할 수 없습니다")
         
+@app.command(name="team")
+async def _Team(ctx):
+    team = ctx.message.content[9:]
+    peopleteam = team.split(" / ")
+    people = peopleteam[0]
+    team = peopleteam[1]
+    person = people.split(" ")
+    teamname = team.split(" ")
+    random.shuffle(teamname)
+    await ctx.channel.send(":point_right: 팀 정하기 시작~! :point_left:")
+    for i in range(0, len(person)):
+        await ctx.channel.send(person[i] + " ----> " + teamname[i])
+        
 @app.command(name="ps", pass_context=True)
 async def _Puresoul(ctx):
     pure = ctx.message.content[6:]
@@ -106,7 +119,7 @@ async def help(ctx):
     if cmd == "":
         embed = discord.Embed(title="Solindy Bot Help", description="솔린디 봇 도움말", color=0x00aaaa)
         embed.add_field(name="관리자 전용", value=" `!sb dm` `!sb clean` `!sb role`", inline=False)
-        embed.add_field(name="기본", value=" `!sb rn` `!sb ps` \n ", inline=False)
+        embed.add_field(name="기본", value=" `!sb rn` `!sb ps` `!sb team` \n ", inline=False)
         embed.add_field(name="명령어는 추후 추가될 수 있습니다", value="\n `!sb help <명령어>` 명령어를 통해 명령어의 상세정보를 확인할 수 있습니다",
                         inline=False)
         await ctx.channel.send(embed=embed)
@@ -133,6 +146,10 @@ async def help(ctx):
     elif cmd == "ps":
         embed = discord.Embed(title="명령어 - Puresoul", description="순수한 영혼 역할을 지급합니다. 순수한 영혼 역할을 가지고 있을 시 욕 사용가능 채팅방이 보이지 않게 됩니다", color=0x00aaaa)
         embed.add_field(name="사용법", value="`!sb ps add/remove`")
+        await ctx.channel.send(embed=embed)
+    elif cmd == "team":
+        embed = discord.Embed(title="명령어 - team", description="팀을 나눕니다", color=0x00aaaa)
+        embed.add_field(name="사용법", value="ex) `!sb team a b c d / 1 1 2 2`")
         await ctx.channel.send(embed=embed)
     else:
         await ctx.channel.send("상세정보를 확인할 명령어를 입력해주세요")
