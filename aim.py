@@ -98,7 +98,8 @@ async def _Team(ctx):
     await ctx.channel.send(":point_right: 팀 정하기 시작~! :point_left:")
     for i in range(0, len(person)):
         await ctx.channel.send(person[i] + " ----> " + teamname[i])
-        
+    await ctx.channel.send(":point_right: 팀 정하기가 종료되었습니다! 자신의 팀을 확인해주세요! :point_left:")   
+     
 @app.command(name="ps", pass_context=True)
 async def _Puresoul(ctx):
     pure = ctx.message.content[6:]
