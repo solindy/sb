@@ -10,7 +10,7 @@ app = commands.Bot(command_prefix='!sb ')
 @app.event
 async def on_ready():
     print("봇 온라인")
-    game = discord.Game("!sb help 로 명령어 확인할 수 있음 ")
+    game = discord.Game("!sb help 로 명령어 확인할 수 있음 ㅅㄱ")
     await app.change_presence(status=discord.Status.online, activity=game)
 
 app.remove_command("help")
